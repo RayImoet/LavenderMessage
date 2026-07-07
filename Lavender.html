@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lavender Message — Pijat Panggilan ke Rumah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F4EF;
+    --ink:#1F2421;
+    --teal:#2F4A43;
+    --teal-soft:#3F5F57;
+    --clay:#C97B53;
+    --stone:#B8AFA1;
+    --line: rgba(31,36,33,0.12);
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.disp{
+    font-family:'Space Grotesk', sans-serif;
+    letter-spacing:-0.02em;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 28px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,244,239,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px; max-width:1140px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700; font-size:20px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo-dot{width:9px; height:9px; border-radius:50%; background:var(--clay); display:inline-block;}
+  .nav-links{display:flex; gap:34px; font-size:14.5px; font-weight:500;}
+  .nav-links a{opacity:0.75; transition:opacity .2s;}
+  .nav-links a:hover{opacity:1;}
+  .nav-cta{
+    background:var(--teal); color:#fff; padding:10px 20px;
+    border-radius:100px; font-size:14px; font-weight:600;
+    transition:background .2s, transform .2s;
+  }
+  .nav-cta:hover{background:var(--teal-soft); transform:translateY(-1px);}
+  .nav-toggle{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:90px 0 60px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:60px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--teal); margin-bottom:22px;
+  }
+  .eyebrow::before{content:""; width:18px; height:1px; background:var(--teal);}
+  .hero h1{
+    font-size:clamp(36px, 5vw, 58px);
+    line-height:1.05; font-weight:700;
+    margin-bottom:22px;
+  }
+  .hero h1 .accent{color:var(--clay);}
+  .hero p.lead{
+    font-size:18px; line-height:1.6; color:rgba(31,36,33,0.72);
+    max-width:460px; margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+  .btn-primary{
+    background:var(--ink); color:#fff; padding:15px 26px; border-radius:100px;
+    font-weight:600; font-size:15px; display:inline-block;
+    transition:background .2s, transform .2s;
+  }
+  .btn-primary:hover{background:var(--teal); transform:translateY(-2px);}
+  .btn-ghost{
+    padding:15px 22px; font-weight:600; font-size:15px;
+    border:1px solid var(--line); border-radius:100px;
+    transition:border-color .2s, background .2s;
+  }
+  .btn-ghost:hover{border-color:var(--ink); background:rgba(31,36,33,0.04);}
+
+  .hero-stats{
+    display:flex; gap:34px; margin-top:46px; padding-top:28px;
+    border-top:1px solid var(--line);
+  }
+  .stat b{display:block; font-family:'Space Grotesk'; font-size:24px; font-weight:700;}
+  .stat span{font-size:13px; color:rgba(31,36,33,0.6);}
+
+  /* ---------- SIGNATURE ROUTE VISUAL ---------- */
+  .route-card{
+    background:var(--card);
+    border-radius:24px;
+    border:1px solid var(--line);
+    padding:38px 30px 30px;
+    position:relative;
+    box-shadow:0 30px 60px -30px rgba(31,36,33,0.25);
+  }
+  .route-card .tag{
+    font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--stone); margin-bottom:20px;
+  }
+  .route-svg-wrap{width:100%;}
+  .route-path{
+    fill:none; stroke:var(--clay); stroke-width:2.5;
+    stroke-dasharray:7 8;
+    stroke-linecap:round;
+    animation:dash 22s linear infinite;
+  }
+  @keyframes dash{ to{ stroke-dashoffset:-300; } }
+  .pulse{ animation:pulse 2.4s ease-in-out infinite; transform-origin:center; }
+  @keyframes pulse{ 0%,100%{transform:scale(1); opacity:1;} 50%{transform:scale(1.5); opacity:0;} }
+  .route-meta{
+    display:flex; justify-content:space-between; margin-top:18px;
+    font-size:13px; color:rgba(31,36,33,0.65);
+  }
+  .route-meta b{color:var(--ink); font-weight:600;}
+
+  /* ---------- SECTION HEADER ---------- */
+  .section{padding:90px 0;}
+  .section-head{max-width:560px; margin-bottom:56px;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,38px); font-weight:700; line-height:1.15;}
+  .section-head p{margin-top:14px; color:rgba(31,36,33,0.66); font-size:16px; line-height:1.6;}
+  .alt{background:var(--ink); color:#F6F4EF;}
+  .alt .section-head p{color:rgba(246,244,239,0.65);}
+  .alt .eyebrow{color:var(--clay);}
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch;
+  }
+  .svc-card{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:30px 26px; transition:transform .25s, box-shadow .25s, border-color .25s;
+  }
+  .svc-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 24px 40px -28px rgba(31,36,33,0.3);
+    border-color:rgba(47,74,67,0.3);
+  }
+  .svc-icon{
+    width:44px; height:44px; border-radius:12px; background:rgba(47,74,67,0.08);
+    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
+  }
+  .svc-card h3{font-size:19px; font-weight:600; margin-bottom:10px;}
+  .svc-card p{font-size:14.5px; color:rgba(31,36,33,0.65); line-height:1.55; margin-bottom:16px;}
+  .svc-price{font-size:13px; font-weight:600; color:var(--teal);}
+
+  .svc-filter{display:flex; gap:10px; margin-bottom:32px; flex-wrap:wrap;}
+  .filter-chip{
+    border:1px solid var(--line); background:transparent; cursor:pointer;
+    padding:9px 18px; border-radius:100px; font-size:13.5px; font-weight:600;
+    font-family:'Inter'; color:rgba(31,36,33,0.65);
+    transition:background .2s, color .2s, border-color .2s;
+  }
+  .filter-chip:hover{border-color:var(--teal);}
+  .filter-chip.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+
+  .svc-card{display:flex; flex-direction:column;}
+  .svc-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+  .svc-top .svc-icon{margin-bottom:0;}
+  .svc-badge{
+    font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;
+    background:rgba(201,123,83,0.12); color:var(--clay);
+    padding:5px 10px; border-radius:100px;
+  }
+  .svc-badge.alt-badge{background:rgba(47,74,67,0.1); color:var(--teal);}
+
+  .svc-list{list-style:none; margin-bottom:20px;}
+  .svc-list li{
+    font-size:13.5px; color:rgba(31,36,33,0.6); padding-left:18px; position:relative;
+    margin-bottom:7px; line-height:1.4;
+  }
+  .svc-list li::before{
+    content:""; position:absolute; left:0; top:7px;
+    width:6px; height:6px; border-radius:50%; background:var(--clay);
+  }
+
+  .svc-foot{
+    margin-top:auto; padding-top:18px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:flex-end; gap:10px; flex-wrap:wrap;
+  }
+  .svc-duration{display:flex; flex-direction:column; gap:3px;}
+  .svc-duration span{font-size:12.5px; color:rgba(31,36,33,0.6); font-weight:500;}
+  .svc-cta{
+    font-size:13.5px; font-weight:600; color:var(--teal); white-space:nowrap;
+    transition:gap .2s;
+  }
+  .svc-cta:hover{color:var(--clay);}
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    position:relative;
+  }
+  .step{
+    position:relative; padding:0 22px 0 0;
+  }
+  .step-num{
+    font-family:'Space Grotesk'; font-size:14px; font-weight:700;
+    color:var(--clay); margin-bottom:14px; display:block;
+  }
+  .step h3{font-size:17px; font-weight:600; margin-bottom:8px; color:#F6F4EF;}
+  .step p{font-size:14px; color:rgba(246,244,239,0.6); line-height:1.55;}
+  .step-line{
+    position:absolute; top:8px; left:0; right:0; height:1px;
+    background:rgba(246,244,239,0.18);
+  }
+
+  /* ---------- COVERAGE ---------- */
+  .coverage{
+    display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center;
+  }
+  .area-list{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;}
+  .area-chip{
+    border:1px solid var(--line); padding:9px 16px; border-radius:100px;
+    font-size:13.5px; font-weight:500;
+  }
+  .map-box{
+    aspect-ratio:1/1; border-radius:20px; background:var(--card);
+    border:1px solid var(--line); position:relative; overflow:hidden;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .testi-card{
+    background:var(--card); border:1px solid var(--line); border-radius:18px; padding:28px;
+  }
+  .testi-card p{font-size:15px; line-height:1.6; color:rgba(31,36,33,0.78); margin-bottom:20px;}
+  .testi-who{display:flex; align-items:center; gap:12px;}
+  .testi-avatar{
+    width:38px; height:38px; border-radius:50%; background:var(--teal);
+    display:flex; align-items:center; justify-content:center; color:#fff;
+    font-weight:600; font-size:14px; font-family:'Space Grotesk';
+  }
+  .testi-who b{font-size:14px; display:block;}
+  .testi-who span{font-size:12.5px; color:var(--stone);}
+
+  /* ---------- BOOKING CTA ---------- */
+  .cta-band{
+    background:var(--teal); color:#fff; border-radius:28px;
+    padding:60px 50px; display:flex; justify-content:space-between; align-items:center;
+    gap:40px; flex-wrap:wrap;
+  }
+  .cta-band h2{font-size:clamp(26px,3vw,34px); max-width:420px; line-height:1.2;}
+  .cta-band p{margin-top:12px; color:rgba(255,255,255,0.72); max-width:380px;}
+  .cta-band .btn-primary{background:#fff; color:var(--ink);}
+  .cta-band .btn-primary:hover{background:var(--clay); color:#fff;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:60px 0 30px; border-top:1px solid var(--line);}
+  .footer-grid{
+    display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:50px;
+  }
+  .footer-grid h4{font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:16px; color:var(--stone);}
+  .footer-grid a{display:block; font-size:14.5px; margin-bottom:10px; color:rgba(31,36,33,0.7);}
+  .footer-grid a:hover{color:var(--ink);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; font-size:13px; color:var(--stone);
+    flex-wrap:wrap; gap:10px;
+  }
+
+  /* ---------- FOCUS ---------- */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--clay); outline-offset:3px; border-radius:4px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .nav-links{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:1fr 1fr;}
+    .steps{grid-template-columns:1fr 1fr; row-gap:36px;}
+    .step-line{display:none;}
+    .coverage{grid-template-columns:1fr;}
+    .testi-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .cta-band{padding:40px 28px;}
+  }
+  @media (max-width:520px){
+    .services-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .hero-stats{flex-wrap:wrap; row-gap:20px;}
+    nav{padding:16px 20px;}
+    .nav-cta{padding:9px 16px; font-size:13px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><span class="logo-dot"></span>Lavender Massage</div>
+    <div class="nav-links">
+      <a href="#layanan">Layanan</a>
+      <a href="#cara-kerja">Cara Kerja</a>
+      <a href="#jangkauan">Jangkauan</a>
+      <a href="#testimoni">Testimoni</a>
+    </div>
+   <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Lavender%20Massage.%0A%0ASaya%20ingin%20memesan%20layanan%20pijat.%20Mohon%20informasi%20jadwal%20dan%20harga.%20Terima%20kasih."
+   class="btn-primary"
+   target="_blank">
+   Pesan Terapis
+</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Pijat panggilan terpercaya</div>
+      <h1>Terapis profesional, <span class="accent">datang ke pintu Anda.</span></h1>
+      <p class="lead">Pesan pijat panggilan tepercaya dalam hitungan menit. Terapis bersertifikat tiba dengan peralatan lengkap, Anda cukup berbaring dan rileks di rumah sendiri.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Lavender%20Massage,%20saya%20ingin%20booking%20layanan%20pijat."
+   class="btn-primary"
+   target="_blank">
+   Pesan Sekarang
+</a>
+        <a href="#layanan" class="btn-ghost">Lihat Layanan</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>100+</b><span>Sesi terlaksana</span></div>
+        <div class="stat"><b>4.9/5</b><span>Rating pelanggan</span></div>
+        <div class="stat"><b>35 mnt</b><span>Rata-rata waktu tiba</span></div>
+      </div>
+    </div>
+
+    <div class="route-card">
+      <div class="tag">Pelacakan Kedatangan</div>
+      <div class="route-svg-wrap">
+        <svg viewBox="0 0 420 280" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <!-- start pin (therapist) -->
+          <circle cx="60" cy="60" r="7" fill="#2F4A43"/>
+          <circle cx="60" cy="60" r="7" fill="none" stroke="#2F4A43" stroke-width="2" class="pulse"/>
+          <text x="76" y="65" font-family="Inter" font-size="12" fill="#1F2421" opacity="0.6">Terapis</text>
+
+          <!-- path -->
+          <path class="route-path" d="M60,60 C 140,40 180,160 250,150 S 340,90 360,210" />
+
+          <!-- destination home icon -->
+          <g transform="translate(340,190)">
+            <path d="M0 18 L20 2 L40 18 V40 H0 Z" fill="#C97B53" opacity="0.15"/>
+            <path d="M0 18 L20 2 L40 18" stroke="#C97B53" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="4" y1="18" x2="4" y2="40" stroke="#C97B53" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="36" y1="18" x2="36" y2="40" stroke="#C97B53" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="4" y1="40" x2="36" y2="40" stroke="#C97B53" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <text x="320" y="248" font-family="Inter" font-size="12" fill="#1F2421" opacity="0.6">Rumah Anda</text>
+        </svg>
+      </div>
+      <div class="route-meta">
+        <span>Status: <b>Menuju lokasi</b></span>
+        <span>Estimasi: <b>12 menit</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="layanan">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Layanan</div>
+      <h2>Pilih sesi sesuai kebutuhan tubuh Anda</h2>
+      <p>Semua sesi dilakukan oleh terapis berlisensi dengan minyak pijat dan matras portabel berkualitas, langsung di rumah Anda.</p>
+    </div>
+    <div class="svc-filter">
+      <button class="filter-chip active" data-filter="all">Semua</button>
+      <button class="filter-chip" data-filter="populer">Populer</button>
+      <button class="filter-chip" data-filter="khusus">Kebutuhan Khusus</button>
+      <button class="filter-chip" data-filter="paket">Paket</button>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="svc-card" data-cat="populer">
+        <div class="svc-top">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F4A43" stroke-width="1.8"><path d="M4 14c0-4 3-7 8-7s8 3 8 7" stroke-linecap="round"/><path d="M4 14h16v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="svc-badge">Paling diminati</span>
+        </div>
+        <h3>Pijat Tradisional</h3>
+        <p>Pijat lembut seluruh tubuh dengan tekanan ringan-sedang untuk meredakan stres dan ketegangan otot setelah hari yang panjang.</p>
+        <ul class="svc-list">
+          <li>Minyak aromaterapi pilihan</li>
+          <li>Tekanan disesuaikan permintaan</li>
+          <li>Cocok untuk pemula pijat</li>
+        </ul>
+        <div class="svc-foot">
+          <div class="svc-duration">
+          </div>
+          <a href="#booking" class="svc-cta">Pesan →</a>
+        </div>
+      </div>
+
+      <div class="svc-card" data-cat="populer">
+        <div class="svc-top">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F4A43" stroke-width="1.8"><path d="M12 2l2.4 5.5L20 9l-4.5 3.8L17 19l-5-3.3L7 19l1.5-6.2L4 9l5.6-1.5L12 2z" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <h3>Pijat Tradisional + Refleksi</h3>
+        <p>Kombinasi pijat tradisional dan refleksi kaki untuk membantu meredakan pegal, melancarkan sirkulasi darah, mengurangi kelelahan, serta memberikan relaksasi menyeluruh agar tubuh terasa lebih segar dan nyaman. </p>
+        <ul class="svc-list">
+          <li>Fokus titik tegang (trigger point)</li>
+          <li>Cocok setelah berdiri seharian</li>
+          <li>Pemetaan titik Refleksi lengkap</li>
+        </ul>
+        <div class="svc-foot">
+          <div class="svc-duration">
+          </div>
+          <a href="#booking" class="svc-cta">Pesan →</a>
+        </div>
+      </div>
+
+      <div class="svc-card" data-cat="populer">
+        <div class="svc-top">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F4A43" stroke-width="1.8"><circle cx="12" cy="8" r="3"/><path d="M5 21v-2a7 7 0 0114 0v2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <h3>Pijat Tradisional + Totok Wajah</h3>
+        <p>Nikmati perpaduan pijat tradisional dan totok wajah yang dirancang untuk membantu meredakan pegal, mengurangi ketegangan, meningkatkan relaksasi, serta memberikan kesegaran pada tubuh dan wajah. Cocok bagi Anda yang ingin memulihkan kebugaran sekaligus menikmati perawatan wajah secara alami.</p>
+        <ul class="svc-list">
+          <li>Teknik pijat tradisional yang nyaman dan menenangkan</li>
+          <li>Totok wajah untuk membantu relaksasi dan kesegaran wajah</li>
+          <li>Cocok untuk melepas penat setelah beraktivitas</li>
+        </ul>
+        <div class="svc-foot">
+          <div class="svc-duration">
+          </div>
+          <a href="#booking" class="svc-cta">Pesan →</a>
+        </div>
+      </div>
+
+      <div class="svc-card" data-cat="khusus">
+        <div class="svc-top">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F4A43" stroke-width="1.8"><path d="M12 21s-7-4.5-9.3-9C1 7.5 3.5 4 7 4c2 0 3.5 1.2 5 3 1.5-1.8 3-3 5-3 3.5 0 6 3.5 4.3 8C19 16.5 12 21 12 21z" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <h3>Pijat Tradisional + Lulur</h3>
+<p>Nikmati perpaduan pijat tradisional dan perawatan lulur yang dirancang untuk memberikan relaksasi sekaligus merawat kesehatan kulit. Terapi ini membantu mengurangi ketegangan otot, melancarkan sirkulasi darah, serta membuat kulit terasa lebih bersih, lembut, dan tampak lebih segar.</p>
+
+<ul class="svc-list">
+  <li>Pijat tradisional untuk membantu meredakan pegal</li>
+  <li>Perawatan lulur untuk membantu membersihkan dan menghaluskan kulit</li>
+  <li>Cocok untuk relaksasi sekaligus perawatan tubuh</li>
+</ul>
+        <div class="svc-foot">
+          <div class="svc-duration">
+          </div>
+          <a href="#booking" class="svc-cta">Pesan →</a>
+        </div>
+      </div>
+
+      <div class="svc-card" data-cat="khusus">
+        <div class="svc-top">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F4A43" stroke-width="1.8"><path d="M4 6h16M4 12h10M4 18h7" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <h3>Pijat Tradisional + Kerokan</h3>
+<p>Nikmati perpaduan pijat tradisional dan terapi kerokan yang dirancang untuk membantu meredakan ketegangan otot, memberikan relaksasi menyeluruh, serta membuat tubuh terasa lebih segar dan nyaman. Perawatan ini menjadi pilihan tepat bagi Anda yang ingin memulihkan kebugaran setelah aktivitas padat.</p>
+
+<ul class="svc-list">
+  <li>Teknik pijat tradisional yang nyaman dan menenangkan</li>
+  <li>Terapi kerokan untuk membantu memberikan rasa nyaman pada tubuh</li>
+  <li>Memberikan relaksasi dan membantu tubuh terasa lebih segar</li>
+</ul>
+        <div class="svc-foot">
+          <div class="svc-duration">
+          </div>
+          <a href="#booking" class="svc-cta">Pesan →</a>
+        </div>
+      </div>
+
+      <div class="svc-card" data-cat="paket">
+        <div class="svc-top">
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F4A43" stroke-width="1.8"><path d="M12 3v18M3 12h18" stroke-linecap="round"/></svg>
+          </div>  
+        </div>
+        <h3>Pijat Tradisional + Refleksi + Totok Wajah ( 3 Layanan )  </h3>
+<p>Perawatan lengkap yang menggabungkan pijat tradisional, refleksi kaki, dan totok wajah untuk memberikan pengalaman relaksasi menyeluruh. Kombinasi terapi ini membantu mengurangi rasa lelah, meredakan ketegangan otot, memberikan kenyamanan pada tubuh, serta membuat wajah terasa lebih segar dan rileks.</p>
+
+<ul class="svc-list">
+  <li>Relaksasi tubuh dengan teknik pijat tradisional</li>
+  <li>Refleksi kaki untuk membantu mengurangi kelelahan</li>
+  <li>Totok wajah untuk memberikan kesegaran dan relaksasi</li>
+</ul>
+        <div class="svc-foot">
+          <div class="svc-duration">
+          </div>
+          <a href="#booking" class="svc-cta">Pesan →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="cara-kerja">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Cara kerja</div>
+      <h2>Empat langkah, terapis sampai di rumah</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-line"></div>
+        <span class="step-num">01</span>
+        <h3>Pilih layanan</h3>
+        <p>Tentukan jenis pijat, durasi, dan jam kedatangan yang Anda inginkan.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <span class="step-num">02</span>
+        <h3>Hubungi Kami</h3>
+        <p>Klik tombol Pesan Sekarang untuk terhubung langsung dengan admin melalui WhatsApp. </p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <span class="step-num">03</span>
+        <h3>Konfirmasi Booking</h3>
+        <p>Sampaikan lokasi, jadwal, dan layanan yang diinginkan. Admin akan mengonfirmasi pesanan Anda.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <h3>Nikmati Layanan</h3>
+        <p>Terapis menyiapkan peralatan sendiri, Anda tinggal berbaring dan rileks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="jangkauan">
+  <div class="wrap coverage">
+    <div>
+      <div class="eyebrow">Jangkauan layanan</div>
+      <h2>Melayani area Yogyakarta dan sekitarnya</h2>
+      <p style="margin-top:14px; color:rgba(31,36,33,0.66); font-size:16px; line-height:1.6;">Tim terapis kami tersebar di beberapa titik agar waktu tunggu Anda tetap singkat.</p>
+      <div class="area-list">
+        <span class="area-chip"></span>
+        <span class="area-chip"></span>
+        <span class="area-chip"></span>
+        <span class="area-chip"></span>
+        <span class="area-chip"></span>
+        <span class="area-chip"></span>
+      </div>
+    </div>
+    <div class="map-box">
+      <svg viewBox="0 0 400 400" width="100%" height="100%">
+        <rect width="400" height="400" fill="#F6F4EF"/>
+        <circle cx="200" cy="200" r="160" fill="none" stroke="#2F4A43" stroke-width="1" opacity="0.15"/>
+        <circle cx="200" cy="200" r="110" fill="none" stroke="#2F4A43" stroke-width="1" opacity="0.2"/>
+        <circle cx="200" cy="200" r="60" fill="none" stroke="#2F4A43" stroke-width="1" opacity="0.3"/>
+        <circle cx="200" cy="200" r="6" fill="#C97B53"/>
+        <circle cx="140" cy="150" r="4" fill="#2F4A43" opacity="0.7"/>
+        <circle cx="260" cy="170" r="4" fill="#2F4A43" opacity="0.7"/>
+        <circle cx="170" cy="260" r="4" fill="#2F4A43" opacity="0.7"/>
+        <circle cx="270" cy="250" r="4" fill="#2F4A43" opacity="0.7"/>
+        <circle cx="230" cy="120" r="4" fill="#2F4A43" opacity="0.7"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="testimoni">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Testimoni</div>
+      <h2>Apa kata pelanggan kami</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p>"Terapisnya tepat waktu dan sangat sopan. Pijatnya pas, badan langsung enteng tanpa harus keluar rumah."</p>
+        <div class="testi-who">
+          <div class="testi-avatar">RS</div>
+          <div><b>Raymondo Stiven.</b><span>Yogyakarta</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p>"Pemesanan gampang banget, dan saya bisa lihat estimasi terapisnya datang jam berapa. Sangat membantu."</p>
+        <div class="testi-who">
+          <div class="testi-avatar">DP</div>
+          <div><b>Dimas P.</b><span>Sleman</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p>"Sudah langganan tiap minggu untuk pijat punggung setelah kerja dari rumah. Terapis selalu profesional."</p>
+        <div class="testi-who">
+          <div class="testi-avatar">SW</div>
+          <div><b>Siti W.</b><span>Yogyakarta</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="booking">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2>Siap rileks tanpa pergi ke mana pun?</h2>
+        <p>Pesan terapis pijat panggilan sekarang, datang ke rumah Anda dalam hitungan menit.</p>
+      </div>
+      <a href="https://wa.me/6281234567890?text=Halo%20Admin%20%20LavenderMassage,%20saya%20ingin%20memesan%20layanan%20pijat."
+   class="btn-primary"
+   target="_blank">
+   Pesan Terapis Sekarang
+</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:14px;"><span class="logo-dot"></span>Lavender  Massage</div>
+        <p style="font-size:14px; color:rgba(31,36,33,0.6); max-width:240px; line-height:1.6;">Layanan pijat panggilan ke rumah dengan terapis bersertifikat di area Yogyakarta dan sekitarnya.</p>
+      </div>
+      <div>
+        <h4>Layanan</h4>
+        <a href="#layanan">Pijat Tradisional + Refleksi</a>
+        <a href="#layanan">Pijat Tradisional + Totok Wajah</a>
+        <a href="#layanan">Pijat Tradisional + Lulur</a>
+        <a href="#layanan">Pijat Tradisional + Kerokan</a>
+      </div>
+      <div>
+        <h4>Perusahaan</h4>
+        <a href="#cara-kerja">Cara Kerja</a>
+        <a href="#jangkauan">Jangkauan</a>
+        <a href="#testimoni">Testimoni</a>
+      </div>
+      <div>
+        <h4>Hubungi Kami</h4>
+        <a href="#">WhatsApp: 0812--</a>
+        <a href="#">hello@Lavender Massage.id</a>
+        <a href="#">Senin–Minggu,08.00–22.00</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Lavender Massage. Seluruh hak cipta dilindungi.</span>
+      <span>Yogyakarta, Indonesia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const chips = document.querySelectorAll('.filter-chip');
+  const cards = document.querySelectorAll('.svc-card');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.cat === filter;
+        card.style.display = show ? 'flex' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
