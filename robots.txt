@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pijat-panggilan-jogja-lavender.vercel.app/sitemap.xml
