@@ -343,22 +343,29 @@ content="https://pijat-panggilan-jogja-lavender.vercel.app/favicon.ico">
   }
 .whatsapp-float{
     position:fixed;
-    width:60px;
-    height:60px;
     bottom:25px;
     right:25px;
-    background:#25D366;
+    width:75px;
+    height:75px;
+    background:#ffffff;
     border-radius:50%;
     display:flex;
     justify-content:center;
     align-items:center;
-    box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
     z-index:9999;
-    transition:0.3s;
+    text-decoration:none;
+    animation:floating 2s ease-in-out infinite;
+    transition:.3s;
 }
 
-.whatsapp-float{
-    animation: floating 2s ease-in-out infinite;
+.whatsapp-float:hover{
+    transform:scale(1.1);
+}
+
+.whatsapp-float img{
+    width:52px;
+    height:52px;
 }
 
 @keyframes floating{
@@ -608,7 +615,7 @@ content="https://pijat-panggilan-jogja-lavender.vercel.app/favicon.ico">
         <div class="step-line"></div>
         <span class="step-num">02</span>
         <h3>Hubungi Kami</h3>
-        <p>Klik tombol Pesan Sekarang untuk terhubung langsung dengan admin melalui WhatsApp. </p>
+        <p>Klik tombol Pesan Sekarang atau Logo WhatsApp dibawah kanan untuk terhubung langsung dengan admin melalui WhatsApp. </p>
       </div>
       <div class="step">
         <div class="step-line"></div>
@@ -763,11 +770,13 @@ content="https://pijat-panggilan-jogja-lavender.vercel.app/favicon.ico">
     });
   });
 </script>
-<a href="https://wa.me/6281215058198?text=Halo%20Admin%20Lavender%20Massage,%20saya%20ingin%20booking%20layanan%20pijat."
+<a href="https://wa.me/6281215058198?text=Halo%20Admin%20Lavender%20Massage,%20saya%20ingin%20booking."
    class="whatsapp-float"
-   target="_blank">
+   target="_blank"
+   aria-label="Chat WhatsApp">
 
-    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+         alt="WhatsApp">
 
 </a>
 
