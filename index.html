@@ -357,37 +357,19 @@ content="https://pijat-panggilan-jogja-lavender.vercel.app/favicon.ico">
     transition:0.3s;
 }
 
-.whatsapp-float:hover{
-    transform:scale(1.1);
+.whatsapp-float{
+    animation: floating 2s ease-in-out infinite;
 }
 
-.whatsapp-float img{
-    width:60x;
-    height:60px;
-    filter:invert(1);
-}
-  .whatsapp-float{
-    animation: shake 2.5s infinite;
-}
-
-@keyframes shake{
-    0%,100%{
-        transform:rotate(0deg);
+@keyframes floating{
+    0%{
+        transform:translateY(0);
     }
-    5%{
-        transform:rotate(-15deg);
+    50%{
+        transform:translateY(-10px);
     }
-    10%{
-        transform:rotate(15deg);
-    }
-    15%{
-        transform:rotate(-15deg);
-    }
-    20%{
-        transform:rotate(15deg);
-    }
-    25%{
-        transform:rotate(0deg);
+    100%{
+        transform:translateY(0);
     }
 }
 </style>
